@@ -42,25 +42,25 @@ void toggle_led(enum LED led, bool led_state) {
 }
 
 void front_left(bool r, bool g, bool b) {
-	GPIO_PinWrite(BOARD_LED_RED_F_L_GPIO, BOARD_LED_RED_F_L_PIN, r);
-	GPIO_PinWrite(BOARD_LED_GREEN_F_L_GPIO, BOARD_LED_GREEN_F_L_PIN, g);
-	GPIO_PinWrite(BOARD_LED_BLUE_F_L_GPIO, BOARD_LED_BLUE_F_L_PIN, b);
+	GPIO_PinWrite(BOARD_LED_RED_F_L_GPIO, BOARD_LED_RED_F_L_PIN, !r);
+	GPIO_PinWrite(BOARD_LED_GREEN_F_L_GPIO, BOARD_LED_GREEN_F_L_PIN, !g);
+	GPIO_PinWrite(BOARD_LED_BLUE_F_L_GPIO, BOARD_LED_BLUE_F_L_PIN, !b);
 }
 
 void front_right(bool r, bool g, bool b){
-	GPIO_PinWrite(BOARD_LED_RED_F_R_GPIO, BOARD_LED_RED_F_R_PIN, r);
-	GPIO_PinWrite(BOARD_LED_GREEN_F_R_GPIO, BOARD_LED_GREEN_F_R_PIN, g);
-	GPIO_PinWrite(BOARD_LED_BLUE_F_R_GPIO, BOARD_LED_BLUE_F_R_PIN, b);
+	GPIO_PinWrite(BOARD_LED_RED_F_R_GPIO, BOARD_LED_RED_F_R_PIN, !r);
+	GPIO_PinWrite(BOARD_LED_GREEN_F_R_GPIO, BOARD_LED_GREEN_F_R_PIN, !g);
+	GPIO_PinWrite(BOARD_LED_BLUE_F_R_GPIO, BOARD_LED_BLUE_F_R_PIN, !b);
 }
 
 void rear_left(bool light, bool brake) {
-	GPIO_PinWrite(BOARD_LED_RED_R_L_GPIO, BOARD_LED_RED_R_L_PIN, light);
-	GPIO_PinWrite(BOARD_LED_RED_R_L_BREAK_GPIO, BOARD_LED_RED_R_L_BREAK_PIN, brake);
+	GPIO_PinWrite(BOARD_LED_RED_R_L_GPIO, BOARD_LED_RED_R_L_PIN, !light);
+	GPIO_PinWrite(BOARD_LED_RED_R_L_BREAK_GPIO, BOARD_LED_RED_R_L_BREAK_PIN, !brake);
 }
 
 void rear_right(bool light, bool brake) {
-	GPIO_PinWrite(BOARD_LED_RED_R_R_GPIO, BOARD_LED_RED_R_R_PIN, light);
-	GPIO_PinWrite(BOARD_LED_RED_R_R_BREAK_GPIO, BOARD_LED_RED_R_R_BREAK_PIN, brake);
+	GPIO_PinWrite(BOARD_LED_RED_R_R_GPIO, BOARD_LED_RED_R_R_PIN, !light);
+	GPIO_PinWrite(BOARD_LED_RED_R_R_BREAK_GPIO, BOARD_LED_RED_R_R_BREAK_PIN, !brake);
 }
 
 void leds_test(uint16_t delay_ms) {
@@ -85,6 +85,8 @@ void leds_test(uint16_t delay_ms) {
 	//test all rear left LEDS (light then brake)
 	rear_left(true, false);
 	sleep(delay_ms);
+	rear_left(false, true);
+	sleep(delay_ms);
 	rear_left(true, true);
 	sleep(delay_ms);
 	rear_left(false, false);
@@ -92,7 +94,11 @@ void leds_test(uint16_t delay_ms) {
 	//test all rear right LEDS (light then brake)
 	rear_right(true, false);
 	sleep(delay_ms);
+	rear_right(false, true);
+	sleep(delay_ms);
 	rear_right(true, true);
 	sleep(delay_ms);
-	rear_left(false, false);
+	rear_right(false, false);
+
+	sleep(50);
 }
