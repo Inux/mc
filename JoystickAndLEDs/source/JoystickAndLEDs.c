@@ -38,29 +38,77 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "MK22F51212.h"
-/* TODO: insert other include files here. */
 
-/* TODO: insert other definitions and declarations here. */
+#include <stdbool.h>
+#include <utils/sleep.h>
 
-/*
- * @brief   Application entry point.
- */
+#include "car/leds.h"
+#include "car/joystick.h"
+
+void updateLed(enum JoyStickPos pos);
+
 int main(void) {
   	/* Init board hardware. */
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
 
-    printf("Hello World\n");
 
-    /* Force the counter to be placed into memory. */
-    volatile static int i = 0 ;
-    /* Enter an infinite loop, just incrementing a counter. */
-    while(1) {
-        i++ ;
-        /* 'Dummy' NOP to allow source level single stepping of
-            tight while() loop */
-        __asm volatile ("nop");
-    }
-    return 0 ;
+    enum JoyStickPos currentPos = NONE;
+
+    printf("LEDs test...");
+    leds_test(2500);
+
+    printf("Reading JoyStick\n");
+
+    while(true) {
+    	enum JoyStickPos pos = getPos();
+    	if(pos != currentPos) {
+			switch(pos) {
+			case UP:
+				printf("UP!\n");
+				break;
+			case RIGHT:
+				printf("RIGHT!\n");
+				break;
+			case DOWN:
+				printf("DOWN!\n");
+				break;
+			case LEFT:
+				printf("LEFT!\n");
+				break;
+			case PUSH:
+				printf("PUSH!\n");
+				break;
+			case NONE:
+			default:
+				break;
+			}
+			currentPos = pos;
+    	}
+	}
+	return 0;
+}
+
+void updateLed(enum JoyStickPos pos) {
+	switch(pos) {
+		case UP:
+			printf("UP!\n");
+			break;
+		case RIGHT:
+			printf("RIGHT!\n");
+			break;
+		case DOWN:
+			printf("DOWN!\n");
+			break;
+		case LEFT:
+			printf("LEFT!\n");
+			break;
+		case PUSH:
+			printf("PUSH!\n");
+			break;
+		case NONE:
+		default:
+			break;
+	}
 }
