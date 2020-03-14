@@ -32,7 +32,6 @@
  * @file    JoystickAndLEDs.c
  * @brief   Application entry point.
  */
-#include <led/led_helper.h>
 #include <stdio.h>
 #include "board.h"
 #include "peripherals.h"
@@ -41,6 +40,10 @@
 #include "MK22F51212.h"
 
 #include "joystick/joystick.h"
+#include <led/led_helper.h>
+#include "led/led_statistics.h"
+
+#include <time.h>
 
 int main(void) {
   	/* Init board hardware. */
@@ -55,8 +58,12 @@ int main(void) {
 
     printf("Reading JoyStick\n");
 
+    time_t lastStatsUpdate = time(NULL);
+	print_led_stats();
+
     while(true) {
     	enum JoyStickPos pos = getPos();
+
 		switch(pos) {
 		case UP:
 			printf("UP - leds_front_on()\n");
@@ -82,6 +89,12 @@ int main(void) {
 		case NONE:
 		default:
 			break;
+		}
+
+		time_t currentTime = time(NULL);
+		if((currentTime - lastStatsUpdate) > 10) {
+			print_led_stats();
+			lastStatsUpdate = currentTime;
 		}
     }
 	return 0;

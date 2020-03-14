@@ -7,6 +7,7 @@
 #include "led/leds.h"
 #include <led/led_helper.h>
 #include <led/leds.h>
+#include <led/led_statistics.h>
 
 
 // Front LEDs
@@ -29,6 +30,7 @@ void leds_front_on() {
 	struct FrontColor color = front_colors[front_color_current];
 	leds_front(color.r, color.g, color.b);
 	ledsFrontOn = true;
+	update_led_stats_front(color);
 }
 
 void leds_front_next() {
@@ -71,6 +73,7 @@ void leds_rear_on() {
 	struct RearColor color = rear_colors[rear_color_current];
 	leds_rear(color.light, color.brake);
 	ledsRearOn = true;
+	update_led_stats_rear(color);
 }
 
 void leds_rear_next() {
