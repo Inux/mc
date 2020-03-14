@@ -34,6 +34,7 @@ void print_led_stats() {
 				"\tBrake:     %d\n";
 
 	printf(format,
+	 LedStats.FrontLeftRed,
 	 LedStats.FrontLeftGreen,
 	 LedStats.FrontLeftBlue,
 	 LedStats.FrontRightRed,
@@ -42,7 +43,6 @@ void print_led_stats() {
 	 LedStats.RearLeftLight,
 	 LedStats.RearLeftBrake,
 	 LedStats.RearRightLight,
-	 LedStats.FrontLeftRed,
 	 LedStats.RearRightBrake);
 }
 
