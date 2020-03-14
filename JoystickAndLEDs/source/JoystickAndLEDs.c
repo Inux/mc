@@ -32,6 +32,7 @@
  * @file    JoystickAndLEDs.c
  * @brief   Application entry point.
  */
+#include <led/led_helper.h>
 #include <stdio.h>
 #include "board.h"
 #include "peripherals.h"
@@ -39,13 +40,7 @@
 #include "clock_config.h"
 #include "MK22F51212.h"
 
-#include <stdbool.h>
-#include <utils/sleep.h>
-
-#include "car/leds.h"
-#include "car/joystick.h"
-
-void updateLed(enum JoyStickPos pos);
+#include "joystick/joystick.h"
 
 int main(void) {
   	/* Init board hardware. */
@@ -53,62 +48,41 @@ int main(void) {
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
 
+    leds_off();
 
-    enum JoyStickPos currentPos = NONE;
-
-    printf("LEDs test...");
-    leds_test(2500);
+    //printf("LEDs test...");
+    //leds_test(2500);
 
     printf("Reading JoyStick\n");
 
     while(true) {
     	enum JoyStickPos pos = getPos();
-    	if(pos != currentPos) {
-			switch(pos) {
-			case UP:
-				printf("UP!\n");
-				break;
-			case RIGHT:
-				printf("RIGHT!\n");
-				break;
-			case DOWN:
-				printf("DOWN!\n");
-				break;
-			case LEFT:
-				printf("LEFT!\n");
-				break;
-			case PUSH:
-				printf("PUSH!\n");
-				break;
-			case NONE:
-			default:
-				break;
-			}
-			currentPos = pos;
-    	}
-	}
-	return 0;
-}
-
-void updateLed(enum JoyStickPos pos) {
-	switch(pos) {
+		switch(pos) {
 		case UP:
-			printf("UP!\n");
+			printf("UP - leds_front_on()\n");
+			leds_front_on();
 			break;
 		case RIGHT:
-			printf("RIGHT!\n");
+			printf("RIGHT - leds_front_next()\n");
+			leds_front_next();
 			break;
 		case DOWN:
-			printf("DOWN!\n");
+			printf("DOWN - leds_rear_next()\n");
+			leds_rear_next();
+			leds_rear_on();
 			break;
 		case LEFT:
-			printf("LEFT!\n");
+			printf("LEFT - leds_front_last()\n");
+			leds_front_last();
 			break;
 		case PUSH:
-			printf("PUSH!\n");
+			printf("PUSH - leds_off()\n");
+			leds_off();
 			break;
 		case NONE:
 		default:
 			break;
-	}
+		}
+    }
+	return 0;
 }

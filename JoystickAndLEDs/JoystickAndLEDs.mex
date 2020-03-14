@@ -73,7 +73,7 @@
                   <pin peripheral="GPIOA" signal="GPIO, 16" pin_num="46" pin_signal="PTA16/SPI0_SOUT/UART0_CTS_b/I2S0_RX_FS">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
-                        <pin_feature name="gpio_init_state" value="true"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
                         <pin_feature name="slew_rate" value="fast"/>
                         <pin_feature name="open_drain" value="enable"/>
                      </pin_features>

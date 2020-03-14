@@ -60,7 +60,7 @@ void BOARD_InitBootPins(void)
 BOARD_LED:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '46', peripheral: GPIOA, signal: 'GPIO, 16', pin_signal: PTA16/SPI0_SOUT/UART0_CTS_b/I2S0_RX_FS, direction: OUTPUT, gpio_init_state: 'true', slew_rate: fast,
+  - {pin_num: '46', peripheral: GPIOA, signal: 'GPIO, 16', pin_signal: PTA16/SPI0_SOUT/UART0_CTS_b/I2S0_RX_FS, direction: OUTPUT, gpio_init_state: 'false', slew_rate: fast,
     open_drain: enable}
   - {pin_num: '47', peripheral: GPIOA, signal: 'GPIO, 17', pin_signal: ADC1_SE17/PTA17/SPI0_SIN/UART0_RTS_b/I2S0_MCLK, direction: OUTPUT, gpio_init_state: 'true',
     slew_rate: fast, open_drain: enable}
@@ -108,7 +108,7 @@ void BOARD_LED(void)
 
     gpio_pin_config_t RED_R_R_BREAK_config = {
         .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+        .outputLogic = 0U
     };
     /* Initialize GPIO functionality on pin PTA16 (pin 46)  */
     GPIO_PinInit(BOARD_LED_RED_R_R_BREAK_GPIO, BOARD_LED_RED_R_R_BREAK_PIN, &RED_R_R_BREAK_config);
